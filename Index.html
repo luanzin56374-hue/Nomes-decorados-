@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Nicks PRO FF - 12+ Fontes</title>
+    <style>
+        /* Reset e Estilos Gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #040308, #0e0521);
+            color: #fff;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            color: #00ffff;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            color: #a49fbf;
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
+        /* Campo de Input */
+        .input-container {
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            color: #fff;
+            outline: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+        }
+
+        .input-container input:focus {
+            border-color: #00ffff;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Seção de Filtros e Opções */
+        .control-section {
+            width: 100%;
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.01);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            color: #00ffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .options-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a49fbf;
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover {
+            border-color: #00ffff;
+            color: #fff;
+        }
+
+        .option-btn.active {
+            background: #00ffff;
+            border-color: #00ffff;
+            color: #000;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.4);
+        }
+
+        /* Grid de Nomes */
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 15px;
+            padding: 10px;
+        }
+
+        /* Cartão do Nome */
+        .name-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 22px;
+            text-align: center;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 85px;
+            word-break: break-all;
+        }
+
+        .name-card:hover {
+            background: rgba(0, 255, 255, 0.05);
+            border-color: #00ffff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.1);
+        }
+
+        /* Notificação de Cópia */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            background: #00ffff;
+            color: #000;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.4);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>⚡ GERADOR DE NICKS SUPREMO FF ⚡</h1>
+        <p>12+ Estilos de Letras e 100 Decorações Raras combinadas. Escolha e clique para copiar!</p>
+        
+        <div class="input-container">
+            <input type="text" id="nameInput" placeholder="Digite seu nick..." value="BRABO">
+        </div>
+
+        <div class="control-section">
+            <div class="section-title">1. Escolha um dos 12 Estilos de Letras:</div>
+            <div class="options-container" id="lettersContainer">
+                <button class="option-btn active" data-font="normal">Padrão (M)</button>
+                <button class="option-btn" data-font="japonesa">卂尺爪卂 (Japão)</button>
+                <button class="option-btn" data-font="gotica">𝕲𝖔́𝖙𝖎𝖈𝖔</button>
+                <button class="option-btn" data-font="italico">𝘚𝘗𝘌𝘌𝘋 (Itálico)</button>
+                <button class="option-btn" data-font="circulo">🅲🅸́🆁🅲🆄🅻🅾</button>
+                <button class="option-btn" data-font="quadrado">🅠🅤🅐🅓🅡🅞</button>
+                <button class="option-btn" data-font="pequena">ᵖᵉᵠᵘᵉⁿᵃ (Sub)</button>
+                <button class="option-btn" data-font="sublinhada">𝖤̲𝗌̲𝖼̲𝗋̲𝗂̲𝗍̲𝖺̲</button>
+                <button class="option-btn" data-font="maiuscula">ᴍɪɴɪ-ᴄᴀɪxᴀ</button>
+                <button class="option-btn" data-font="espacada">𝖤 𝗌 𝗉 𝖺 𝖼̧ 𝖺 𝖽 𝖺</button>
+                <button class="option-btn" data-font="raio">⚡︎R⚡︎a⚡︎i⚡︎o</button>
+                <button class="option-btn" data-font="invertida">ɐpıʇɹǝʌuI</button>
+            </div>
+        </div>
+
+        <div class="control-section">
+            <div class="section-title">2. Filtrar por Tipo de Símbolos:</div>
+            <div class="options-container" id="categoriesContainer">
+                <button class="option-btn active" data-style="todos">Ver Todos (100)</button>
+                <button class="option-btn" data-style="armas">⚔️ Armas & Facas</button>
+                <button class="option-btn" data-style="insanos">🔥 Insanos & Pro</button>
+                <button class="option-btn" data-style="soft">🌸 Soft & Kawaii</button>
+                <button class="option-btn" data-style="simples">⚡ Simples</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" id="namesContainer">
+        <!-- Inserido dinamicamente via JS -->
+    </div>
+
+    <div class="toast" id="toast">Copiado para o Free Fire!</div>
+
+    <script>
+        // Grande banco de alfabetos customizados para o Free Fire
+        const dFontes = {
+            japonesa: {'a':'卂','b':'乃','c':'匚','d':'刀','e':'乇','f':'千','g':'g','h':'卄','i':'丨','j':'𠘨','k':'K','l':'L','m':'爪','n':'𠘨','o':'ㄖ','p':'卩','q':'Ҩ','r':'尺','s':'丂','t':'ㄒ','u':'ㄩ','v':'𝕍','w':'山','x':'乂','y':'ㄚ','z':'乙'},
+            gotica: {'a':'𝖆','b':'𝖇','c':'𝖈','d':'𝖉','e':'ece','f':'𝖋','g':' Hoffman','h':'𝖍','i':'𝖎','j':'𝖏','k':'𝖐','l':'𝖑','m':'𝖒','n':'𝖓','o':'𝖔','p':'𝖕','q':'𝖖','r':'𝖗','s':'𝖘','t':'𝖙','u':'𝖚','v':'𝖛','w':'𝖜','x':'𝖝','y':'𝖞','z':'𝖟'},
+            italico: {'a':'𝘢','b':'𝘣','c':'𝘤','d':'𝘥','e':'𝘦','f':'𝘧','g':'𝘨','h':'𝘩','i':'𝘪','j':'𝘫','k':'𝘬','l':'𝘭','m':'𝘮','n':'𝘯','o':'𝘰','p':'𝘱','q':'𝘲','r':'𝘳','s':'𝘴','t':'𝘵','u':'𝘶','v':'𝘷','w':'𝘸','x':'𝘹','y':'𝘺','z':'𝘻'},
+            circulo: {'a':'🄰','b':'🄱','c':'🄲','d':'🄳','e':'🄴','f':'🄵','g':'🄶','h':'🄷','i':'🄸','j':'🄹','k':'🄺','l':'🄻','m':'🄼','n':'🄽','o':'🄾','p':'🄿','q':'🅀','r':'🅁','s':'🅂','t':'🅃','u':'🅄','v':'🅅','w':'🅆','x':'🅇','y':'🅈','z':'🅉'},
+            quadrado: {'a':'🅜','b':'🅝','c':'🅞','d':'🅟','e':'🅠','f':'🅡','g':'🅢','h':'🅣','i':'🅤','j':'🅥','k':'🅦','l':'🅧','m':'🅨','n':'🅩','o':'🅪','p':'🅫','q':'🅬','r':'🅭','s':'🅮','t':'🅯','u':'🅰','v':'🅱','w':'🅲','x':'🅳','y':'🅔','z':'🅕'},
+            pequena: {'a':'ᵃ','b':'ᵇ','c':'ᶜ','d':'ᵈ','e':'ᵉ','f':'ᶠ','g':'ᵍ','h':'ʰ','i':'ⁱ','j':'ʲ','k':'ᵏ','l':'ˡ','m':'ᵐ','n':'ⁿ','o':'ᵒ','p':'ᵖ','q':'ᵠ','r':'ʳ','s':'ˢ','t':'ᵗ','u':'ᵘ','v':'ᵛ','w':'ʷ','x':'ˣ','y':'ʸ','z':'ᶻ'},
+            maiuscula: {'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ꜰ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'s','t':'ᴛ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'},
+            invertida: {'a':'ɐ','b':'q','c':'ɔ','d':'p','e':'ǝ','f':'ɟ','g':'ƃ','h':'ɥ','i':'ı','j':'ɾ','k':'ʞ','l':'l','m':'ɯ','n':'u','o':'o','p':'d','q':'b','r':'ɹ','s':'s','t':'ʇ','u':'n','v':'ʌ','w':'ʍ','x':'x','y':'ʎ','z':'z'}
+        };
+
+        const nicksDatabase = {
+            armas: [
+                "︻╦̵̵͇̿̿̿̿╤──ㅤXㅤ", "╾━╤デ╦︻ㅤXㅤ", "⌐╦╦═─ㅤXㅤ", "︻╦デ╤━𓆪ㅤXㅤ", "⚔️𓆩𒆜ㅤXㅤ𒆜⚔️𓆪",
+                "𓌜⚔️꧁☬ㅤXㅤ☬꧂⚔️𓌜", "⚔☠꧁༺ㅤXㅤ༻꧂☠⚔", "💥︻╦̵̵͇̿̿̿̿╤──ㅤX", "〆⚔️𓆩☠︎ㅤXㅤ☠︎𓆪⚔️〆", "Xㅤ⚔️⚙️",
+                "Xㅤ︻╦╤─", "⚔️亗ㅤXㅤ亗⚔️", "𓆩⚔️𓆪ㅤXㅤ𓆩⚔️𓆪", "𓄿⚔️꧁༺ㅤXㅤ༻꧂", "𓆗⚔️꧁☬ㅤXㅤ☬꧂",
+                "🏹⚔️꧁☯︎ㅤXㅤ☯︎꧂", "Xㅤ╾━╤デ╦︻", "╰☠╮⚔️꧁༺ㅤXㅤ༻꧂⚔️", "⸎⚔️꧁☬ㅤXㅤ☬꧂", "❖⚔️𓆩ㅤXㅤ𓆪⚔️❖",
+                "𓌜𓆩☠︎ㅤXㅤ☠︎𓆪𓌜", "🛠️⚔️꧁༺ㅤXㅤ༻꧂", "🪓⚔️꧁☬ㅤXㅤ☬꧂", "⛓️⚔️꧁☯︎ㅤXㅤ☯︎꧂", "Xㅤ🏹🦅"
+            ],
+            insanos: [
+                "꧁ঔৣ☬✞ㅤXㅤ✞☬ঔৣ꧂", "亗『×͜×』ㅤXㅤ亗", "⚡︎꧁☠︎☯︎ㅤXㅤ☯︎☠︎꧂⚡︎", "𖤍⚔꧁ঔৣㅤXㅤঔৣ꧂⚔𖤍", "☣️☠️꧁☬ㅤXㅤ☬꧂☠️☣️",
+                "✝️☠️꧁༺ㅤXㅤ༻꧂☠️✝️", "🌌⚡︎꧁☯︎ㅤXㅤ☯︎꧂⚡︎🌌", "×͜×ㅤㅤ꧂ㅤXㅤ꧁ㅤ", "亗ㅤ𓆩☠︎ㅤXㅤ☠︎𓆪ㅤ亗", "꧁𓊈𒆜ㅤXㅤ𒆜𓊉꧂",
+                "☯︎⚡︎𓆩ツㅤXㅤツ𓆪⚡︎☯︎", "☠︎⚓︎꧁༺ㅤXㅤ༻꧂⚓︎☠︎", "𓆩✧𓆪꧁☬ㅤXㅤ☬꧂𓆩✧𓆪", "🎰🃏꧁༺ㅤXㅤ༻꧂🃏🎰", "🪐🌌꧁☯︎ㅤXㅤ☯︎꧂🌌🪐",
+                "🧬⚡︎𓆩☠︎ㅤXㅤ☠︎𓆪⚡︎🧬", "☄️💥꧁༺ㅤXㅤ༻꧂💥☄️", "⚡︎×͜×꧁༺ㅤXㅤ༻꧂×͜×⚡︎", "亗𓆩☠︎𓆪ㅤXㅤ𓆩☠︎𓆪亗", "✦☠︎꧁☬ㅤXㅤ☬꧂☠︎✦",
+                "☣️𓆩ツㅤXㅤツ𓆪☣️", "꧁༺ㅤXㅤ༻꧂", "╰つ꧁☬ㅤXㅤ☬꧂つ╯", "彡☠︎𓆩ㅤXㅤ𓆪☠︎彡", "米ツ꧁༺ㅤXㅤ༻꧂ツ米"
+            ],
+            soft: [
+                "🎐🌸꧁༺ㅤXㅤ༻꧂🌸🎐", "🔮✨꧁☯︎ㅤXㅤ☯︎꧂✨🔮", "🧸🎈꧁༺ㅤXㅤ༻꧂🎈🧸", "🍓🍰꧁☯︎ㅤXㅤ☯︎꧂🍰🍓", "🍒🍨꧁☬ㅤXㅤ☬꧂🍨🍒",
+                "🍬🍭꧁༺ㅤXㅤ༻꧂🍭🍬", "🎨🎭꧁༺ㅤXㅤ༻꧂🎭🎨", "🎐🌸𓆩ㅤXㅤ𓆪🌸🎐", "✨𓆩ツㅤXㅤツ𓆪✨", "🍼🧸꧁༺ㅤXㅤ༻꧂",
+                "✿🍦꧁☯︎ㅤXㅤ☯︎꧂", "🎀🌸꧁☬ㅤXㅤ☬꧂", "🩰✨꧁༺ㅤXㅤ༻꧂", "🍯🐝꧁☯︎ㅤXㅤ꧂", "🎈🧸𓆩ㅤXㅤ𓆪🧸🎈",
+                "🐱🐾꧁༺ㅤXㅤ༻꧂", "🕊️✨꧁☬ㅤXㅤ☬꧂", "🌸🍃꧁☯︎ㅤXㅤ☯︎꧂", "🍡🍵꧁༺ㅤXㅤ༻꧂", "🍧🍬𓆩ㅤXㅤ𓆪",
+                "⭐🌙꧁☬ㅤXㅤ☬꧂", "🌻🐝꧁༺ㅤXㅤ༻꧂", "🧁🍒꧁☯︎ㅤXㅤ☯︎꧂", "🦄✨꧁༺ㅤXㅤ༻꧂", "🍀🎈꧁☬ㅤXㅤ☬꧂"
+            ],
+            simples: [
+                "×͜×ㅤX", "亗ㅤXㅤ亗", "ㅤX", "Xㅤ✟", "Xㅤ⚡", "X✿", "ツ X", "𖤍 X 𖤍", "☠ㅤXㅤ☠", "〆 X 〆",
+                "么 X 么", "℟__X", "𝕏_X", "ꓠꓲꓚꓗ_X", "𐂂ㅤX", "Xㅤ", "Xㅤ⌁", "Xㅤ⚡︎", "Xㅤ𖤍", "Xㅤ×͜×",
+                "🅅_X", "⪻ X ⪼", "𓊈 X 𓊉", "𓆩 X 𓆪", "𓅂 X 𓅂"
+            ]
+        };
+
+        const container = document.getElementById('namesContainer');
+        const nameInput = document.getElementById('nameInput');
+        const toast = document.getElementById('toast');
+        
+        let estiloAtual = 'todos';
+        let fonteAtual = 'normal';
+
+        // Lógica de Conversão Complexa para 12 fontes
+        function converterTexto(texto) {
+            texto = texto.toLowerCase();
+            
+            if (fonteAtual === 'normal') return texto.toUpperCase();
+            
+            if (fonteAtual === 'espacada') return texto.toUpperCase().split('').join(' ');
+            
+            if (fonteAtual === 'sublinhada') return texto.toUpperCase().split('').join('\u0332') + '\u0332';
+            
+            if (fonteAtual === 'raio') return "⚡︎" + texto.toUpperCase().split('').join('⚡︎');
+
+            if (fonteAtual === 'invertida') {
+                return texto.split('').reverse().map(c => dFontes.invertida[c] || c).join('');
+            }
+
+            // Mapeamento direto de dicionários estáticos (gotica, japonesa, circulo, etc.)
+            let arrConvertido = "";
+            const mapaSelecionado = dFontes[fonteAtual];
+            for (let i = 0; i < texto.length; i++) {
+                const char = texto[i];
+                arrConvertido += mapaSelecionado[char] || char;
+            }
+
+            return (fonteAtual === 'pequena' || fonteAtual === 'gotica') ? arrConvertido : arrConvertido.toUpperCase();
+        }
+
+        function obterTodosEstilos() {
+            return [...nicksDatabase.armas, ...nicksDatabase.insanos, ...nicksDatabase.soft, ...nicksDatabase.simples];
+        }
+
+        function renderizarNomes() {
+            const rawInput = nameInput.value.trim() || "NICK";
+            const nomeUsuario = converterTexto(rawInput);
+            
+            container.innerHTML = "";
+            let listaFiltrada = estiloAtual === 'todos' ? obterTodosEstilos() : nicksDatabase[estiloAtual];
+
+            listaFiltrada.forEach(estilo => {
+                const nomeDecorado = estilo.replace(/X/g, nomeUsuario);
+
+                const card = document.createElement('div');
+                card.className = 'name-card';
+                card.textContent = nomeDecorado;
+                
+                card.addEventListener('click', () => {
+                    copiarTexto(nomeDecorado);
+                });
+
+                container.appendChild(card);
+            });
+        }
+
+        function copiarTexto(texto) {
+            navigator.clipboard.writeText(texto).then(() => {
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                console.error('Erro ao copiar: ', err);
+            });
+        }
+
+        // Seleção de Fontes
+        document.querySelectorAll('#lettersContainer .option-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                document.querySelectorAll('#lettersContainer .option-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                fonteAtual = e.target.getAttribute('data-font');
+                renderizarNomes();
+            });
+        });
+
+        // Seleção de Símbolos
+        document.querySelectorAll('#categoriesContainer .option-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                document.querySelectorAll('#categoriesContainer .option-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                estiloAtual = e.target.getAttribute('data-style');
+                renderizarNomes();
+            });
+        });
+
+        nameInput.addEventListener('input', renderizarNomes);
+        renderizarNomes();
+    </script>
+    <!-- Rodapé com Informações do Criador -->
+    <footer style="
+        width: 100%; 
+        max-width: 800px; 
+        text-align: center; 
+        margin-top: 40px; 
+        padding: 20px 10px; 
+        border-top: 1px solid rgba(255, 255, 255, 0.05); 
+        color: #a49fbf; 
+        font-size: 0.85rem; 
+        letter-spacing: 1px;
+    ">
+        <p>Criado por <span style="color: #00ffff; font-weight: bold; text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);">Jose Luan</span></p>
+        <p style="margin-top: 5px; opacity: 0.7;">© 2026 • Todos os direitos reservados</p>
+    </footer>
+        
+    </body>
+                  </html>
+
